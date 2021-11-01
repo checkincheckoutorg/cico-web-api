@@ -1,0 +1,19 @@
+{
+  "name": "node_folder",
+  "version": "1.0.0",
+  "description": "This will hold the package.json for our library app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Green",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "crypto": "^1.0.1",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "mysql": "^2.18.1",
+    "uuid": "^8.3.2"
+  }
+}
