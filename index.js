@@ -7,13 +7,23 @@ var bodyParser = require('body-parser');
 var uuid = require('uuid');
 var crypto = require('crypto');
 
+// var connection = mysql.createConnection
+// (
+// {
+//     host: 'library-db.cihj00oxs8fu.us-east-2.rds.amazonaws.com',
+//     user: 'admin',
+//     password: 'masterpassword',
+//     database: 'librarydb'
+// }
+// );
+
 var connection = mysql.createConnection
 (
 {
-    host: 'library-db.cihj00oxs8fu.us-east-2.rds.amazonaws.com',
-    user: 'admin',
-    password: 'masterpassword',
-    database: 'librarydb'
+    host: process.env.RDS_HOSTNAME,
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    database: process.env.RDS_PORT
 }
 );
 
@@ -126,7 +136,7 @@ app.post('/login', (req,res,next) => {
 // })
 
 //start server
-app.listen(3000, () => {
+app.listen(process.env.port ||3000, () => {
     console.log('Running on port 3000')
 })
 

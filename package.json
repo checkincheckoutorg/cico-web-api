@@ -1,5 +1,5 @@
 {
-  "name": "node_folder",
+  "name": "cico-web-api",
   "version": "1.0.0",
   "description": "This will hold the package.json for our library app.",
   "main": "index.js",
