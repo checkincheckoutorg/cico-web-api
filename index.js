@@ -136,8 +136,10 @@ app.post('/login', (req,res,next) => {
 // })
 
 // Below is a test to send message to address
+var dbname = process.env.RDS_DB_NAME;
+
 app.get("/", (req,res,) => {
-    res.send("Testing 123");
+    res.send("Testing 123, db name is " + dbname);
 })
 
 //start server
