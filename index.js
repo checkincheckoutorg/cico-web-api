@@ -135,8 +135,13 @@ app.post('/login', (req,res,next) => {
 //     console.log('Salt: ' + encrypt.salt);
 // })
 
+// Below is a test to send message to address
+app.get("/", (req,res,) => {
+    res.send("Testing 123");
+})
+
 //start server
-app.listen(process.env.port ||3000, () => {
+app.listen(process.env.RDS_PORT || 3000, () => {
     console.log('Running on port 3000')
 })
 
