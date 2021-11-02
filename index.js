@@ -141,7 +141,7 @@ app.get("/", (req,res,) => {
 })
 
 //start server
-app.listen(process.env.RDS_PORT || 3000, () => {
+app.listen(process.env.port || 3000, () => {
     console.log('Running on port 3000')
 })
 
