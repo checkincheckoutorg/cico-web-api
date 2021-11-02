@@ -83,7 +83,7 @@ app.post('/register', (req,res,next) => {
         if (result && result.length) res.json('Account already exists!!!');
         else
         {
-            connection.query("INSERT INTO Account (unique_id, first_name, last_name, email, age, admin, encrypted_password, salt, created_at, updated_at)" 
+            connection.query("INSERT INTO Account (unique_id, first_name, last_name, email, age, admin_status, encrypted_password, salt, created_at, updated_at)" 
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())", 
             [uid, firstName, lastName, email, age, admin, password, salt], 
             function(err,result,fields) {
