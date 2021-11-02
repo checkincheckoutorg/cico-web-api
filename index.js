@@ -72,6 +72,8 @@ app.post('/register', (req,res,next) => {
     var email = post_data.email;
     var firstName = post_data.firstName;
     var lastName = post_data.lastName;
+    var age = post_data.age;
+    var admin = post_data.admin;
 
     connection.query('SELECT * FROM Account where email = ?', [email], function(err,result,fields) {
         connection.on('error', function(err) {
@@ -81,9 +83,9 @@ app.post('/register', (req,res,next) => {
         if (result && result.length) res.json('Account already exists!!!');
         else
         {
-            connection.query("INSERT INTO Account (unique_id, first_name, last_name, email, encrypted_password, salt, created_at, updated_at)" 
-            + "VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())", 
-            [uid, firstName, lastName, email, password, salt], 
+            connection.query("INSERT INTO Account (unique_id, first_name, last_name, email, age, admin, encrypted_password, salt, created_at, updated_at)" 
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())", 
+            [uid, firstName, lastName, email, age, admin, password, salt], 
             function(err,result,fields) {
                 connection.on('error', function(err) {
                     console.log('[MySQL ERROR]', err);
@@ -136,10 +138,8 @@ app.post('/login', (req,res,next) => {
 // })
 
 // Below is a test to send message to address
-var dbname = process.env.RDS_DB_NAME;
-
 app.get("/", (req,res,) => {
-    res.send("Testing 123, db name is " + dbname);
+    res.send("Go away!");
 })
 
 //start server
