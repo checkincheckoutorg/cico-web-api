@@ -128,6 +128,22 @@ app.post('/login', (req,res,next) => {
     });
 })
 
+// Endpoint to get all books
+app.get('/getAllBooks', (req,res,next) => {
+    
+    // dont need post data from request body
+    
+    connection.query('SELECT * FROM Book',
+    function(err, result, fields) {
+        // Check connection 
+        connection.on('error', function(err) {
+            console.log('[MySQL Error]', err);
+        })
+    })
+
+    res.send(result);
+})
+
 // Below is a test to see if we can 'get' hashed passwords
 
 // app.get("/", (req,res,next) => {
