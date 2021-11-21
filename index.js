@@ -149,6 +149,29 @@ app.get('/getAllBooks', (req,res,next) => {
     });
 })
 
+// Endpoint to get books by filter (of choice from user)
+app.post('/getBooksByFilter', (req,res,next) => {
+
+    var post_data = req.body; //get post body
+    var search_field = post_data.search; // get field "search" from post data
+    var filter_field = post_data.filter; // get field "filter" from post data
+
+    var query = "SELECT * FROM Book WHERE " + filter_field + " LIKE '%" + search_field + "%'";
+
+    connection.query(query, function(err, result, fields) {
+        connection.on('error',function(err) {
+            console.log('[MySQL Error]', err);
+        });
+
+        if (result && result.length) {
+            res.end(JSON.stringify(result));
+        }
+        else {
+            res.end(JSON.stringify('No books available')); // keep same energy for searching by query
+        }
+    });
+})
+
 // Below is a test to see if we can 'get' hashed passwords
 
 // app.get("/", (req,res,next) => {
