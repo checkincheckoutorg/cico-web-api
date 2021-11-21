@@ -23,7 +23,7 @@ var connection = mysql.createConnection
     host: process.env.RDS_HOSTNAME,
     user: process.env.RDS_USERNAME,
     password: process.env.RDS_PASSWORD,
-    database: process.env.RDS_PORT
+    database: process.env.RDS_DB_NAME
 }
 );
 
@@ -72,6 +72,8 @@ app.post('/register', (req,res,next) => {
     var email = post_data.email;
     var firstName = post_data.firstName;
     var lastName = post_data.lastName;
+    var age = post_data.age;
+    var admin = post_data.admin;
 
     connection.query('SELECT * FROM Account where email = ?', [email], function(err,result,fields) {
         connection.on('error', function(err) {
@@ -81,9 +83,9 @@ app.post('/register', (req,res,next) => {
         if (result && result.length) res.json('Account already exists!!!');
         else
         {
-            connection.query("INSERT INTO Account (unique_id, first_name, last_name, email, encrypted_password, salt, created_at, updated_at)" 
-            + "VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())", 
-            [uid, firstName, lastName, email, password, salt], 
+            connection.query("INSERT INTO Account (unique_id, first_name, last_name, email, age, admin_status, encrypted_password, salt, created_at, updated_at)" 
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())", 
+            [uid, firstName, lastName, email, age, admin, password, salt], 
             function(err,result,fields) {
                 connection.on('error', function(err) {
                     console.log('[MySQL ERROR]', err);
@@ -126,6 +128,22 @@ app.post('/login', (req,res,next) => {
     });
 })
 
+// Endpoint to get all books
+app.get('/getAllBooks', (req,res,next) => {
+    
+    // dont need post data from request body
+    
+    connection.query('SELECT * FROM Book',
+    function(err, result, fields) {
+        // Check connection 
+        connection.on('error', function(err) {
+            console.log('[MySQL Error]', err);
+        })
+    })
+
+    res.send(result);
+})
+
 // Below is a test to see if we can 'get' hashed passwords
 
 // app.get("/", (req,res,next) => {
@@ -137,11 +155,11 @@ app.post('/login', (req,res,next) => {
 
 // Below is a test to send message to address
 app.get("/", (req,res,) => {
-    res.send("Testing 123");
+    res.send("Go away!");
 })
 
 //start server
-app.listen(process.env.RDS_PORT || 3000, () => {
+app.listen(process.env.port || process.env.RDS_PORT || 3000, () => {
     console.log('Running on port 3000')
 })
 
