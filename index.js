@@ -140,7 +140,12 @@ app.get('/getAllBooks', (req,res,next) => {
             console.log('[MySQL Error]', err);
         });
 
-        res.send(result);
+        if (result && result.length) {
+            res.end(JSON.stringify(result));
+        }
+        else {
+            res.end(JSON.stringify('No books available')); // keep same energy for searching by query
+        }
     });
 })
 
