@@ -138,10 +138,10 @@ app.get('/getAllBooks', (req,res,next) => {
         // Check connection 
         connection.on('error', function(err) {
             console.log('[MySQL Error]', err);
-        })
-    })
+        });
 
-    res.json(result);
+        res.send(result);
+    });
 })
 
 // Below is a test to see if we can 'get' hashed passwords
