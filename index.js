@@ -141,7 +141,7 @@ app.get('/getAllBooks', (req,res,next) => {
         })
     })
 
-    res.send(result);
+    res.json(result);
 })
 
 // Below is a test to see if we can 'get' hashed passwords
