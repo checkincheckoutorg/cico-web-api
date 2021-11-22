@@ -163,12 +163,14 @@ app.post('/getBooksByFilter', (req,res,next) => {
             console.log('[MySQL Error]', err);
         });
 
-        if (result && result.length) {
-            res.end(JSON.stringify(result));
-        }
-        else {
-            res.end(JSON.stringify('No books available')); // keep same energy for searching by query
-        }
+        res.end(JSON.stringify(result));
+
+        // if (result && result.length) {
+        //     res.end(JSON.stringify(result));
+        // }
+        // else {
+        //     res.end(JSON.stringify('No books available')); // keep same energy for searching by query
+        // }
     });
 })
 
