@@ -221,6 +221,37 @@ app.post('/checkoutBook', (req, res, next) => {
     });
 })
 
+// Endpoint to check out a book 
+// params: id and email/username
+// must subtract 1 from Book field Stock where Id = id
+// must add row to BookHistory table and fill Id with id and User with email, fill in other fields
+app.post('/checkInBook', (req, res, next) => {
+    var post_data = req.body; // get POST parameters
+    var book_id = post_data.book_id;
+    var history_id = post_data.history_id;
+
+    var checkin_action = "Check In";
+
+    connection.query("UPDATE Book SET stock = stock + 1 WHERE id = ?", 
+    [book_id], 
+    function(err,result,fields) {
+        // Check connection
+        connection.on('error', function(err) {
+            console.log('[MySQL ERROR]', err);
+        });
+    });
+
+    connection.query("UPDATE BookHistory SET book_action = ?, action_time = NOW() WHERE id = ?",
+    [checkin_action, history_id],
+    function(err,result,fields) {
+        // Check connection
+        connection.on('error', function(err) {
+            console.log('[MySQL ERROR]', err);
+        });
+        res.json("Check In Successful!")
+    })
+})
+
 // Endpoint to get dropped off books
 app.get('/getDroppedOffBooks', (req,res,next) => {
     
