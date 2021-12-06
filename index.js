@@ -221,14 +221,14 @@ app.post('/checkoutBook', (req, res, next) => {
     });
 })
 
-// Endpoint to get all books
+// Endpoint to get dropped off books
 app.get('/getDroppedOffBooks', (req,res,next) => {
     
     // dont need post data from request body
     
     var dropped_off_action = "Dropped Off";
 
-    connection.query('SELECT * FROM BookHistory where book_action = ' + dropped_off_action,
+    connection.query('SELECT * FROM BookHistory where book_action = \"Dropped Off\"',
     function(err, result, fields) {
         // Check connection 
         connection.on('error', function(err) {
@@ -243,8 +243,6 @@ app.get('/getDroppedOffBooks', (req,res,next) => {
         }
     });
 })
-
-
 
 // Below is a test to see if we can 'get' hashed passwords
 
