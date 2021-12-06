@@ -238,6 +238,7 @@ app.post('/checkInBook', (req, res, next) => {
         // Check connection
         connection.on('error', function(err) {
             console.log('[MySQL ERROR]', err);
+            res.json("Can't Check In!");
         });
     });
 
@@ -247,6 +248,7 @@ app.post('/checkInBook', (req, res, next) => {
         // Check connection
         connection.on('error', function(err) {
             console.log('[MySQL ERROR]', err);
+            res.json("Can't Check In!");
         });
         res.json("Check In Successful!")
     })
