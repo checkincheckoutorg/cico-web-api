@@ -121,7 +121,7 @@ app.post('/login', (req,res,next) => {
             var encrypted_password = result[0].encrypted_password;
             // Hash password from login request with salt in database
             var hashed_password = checkHashPassword(user_password, salt).passwordHash;
-            if (encrypted_password == hashed_password) res.end(JSON.stringify(result[0])); // if password is true, return all info of user
+            if (encrypted_password == hashed_password) res.end(JSON.stringify(result[0])); 
             else res.end(JSON.stringify('Wrong Password!'));
         }
         else res.json('User does not exist!');
@@ -220,6 +220,31 @@ app.post('/checkoutBook', (req, res, next) => {
         }
     });
 })
+
+// Endpoint to get all books
+app.get('/getDroppedOffBooks', (req,res,next) => {
+    
+    // dont need post data from request body
+    
+    var dropped_off_action = "Dropped Off";
+
+    connection.query('SELECT * FROM BookHistory where book_action = ' + dropped_off_action,
+    function(err, result, fields) {
+        // Check connection 
+        connection.on('error', function(err) {
+            console.log('[MySQL Error]', err);
+        });
+
+        if (result && result.length) {
+            res.end(JSON.stringify(result));
+        }
+        else {
+            res.end(JSON.stringify('No books waiting to be checked in')); 
+        }
+    });
+})
+
+
 
 // Below is a test to see if we can 'get' hashed passwords
 
