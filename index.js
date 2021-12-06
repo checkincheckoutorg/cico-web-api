@@ -242,7 +242,7 @@ app.post('/checkInBook', (req, res, next) => {
         });
     });
 
-    connection.query("UPDATE BookHistory SET book_action = ?, action_time = \"Check In\" WHERE id = ?",
+    connection.query("UPDATE BookHistory SET book_action = \"Check In\", action_time = NOW() WHERE id = ?",
     [history_id],
     function(err,result,fields) {
         // Check connection
