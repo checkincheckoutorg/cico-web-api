@@ -254,6 +254,27 @@ app.post('/checkInBook', (req, res, next) => {
     })
 })
 
+// endpoint to get all books checked out by user
+app.post('/getCheckedOutBooksByUser', (req, res, next) => {
+    var post_data = req.body;
+    var email = post_data.email;
+    var book_action = "Check Out"
+
+    connection.query("SELECT Book.* FROM Book, Account, BookHistory "
+                    + "where Book.id = BookHistory.book_id "
+                    + "and Account.id = BookHistory.account_id "
+                    + "and Account.id = (select id from Account where email = ?) "
+                    + "and BookHistory.book_action = ?",
+                    [email, book_action],
+                    function(err,result,fields) {
+                        connection.on('error', function(err) {
+                            console.log('[MySQL ERROR]', err);
+                        });
+                        res.end(JSON.stringify(result));
+                    })
+
+})
+
 // endpoint to drop off book
 app.post('/dropOffBook', (req,res,next) => {
     var post_data = req.body;
