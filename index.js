@@ -228,7 +228,8 @@ app.get('/getDroppedOffBooks', (req,res,next) => {
     
     var dropped_off_action = "Dropped Off";
 
-    connection.query('SELECT * FROM BookHistory where book_action = \"Dropped Off\"',
+    connection.query('SELECT * FROM BookHistory where book_action = ?',
+    [dropped_off_action],
     function(err, result, fields) {
         // Check connection 
         connection.on('error', function(err) {
