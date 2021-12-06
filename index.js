@@ -174,6 +174,37 @@ app.post('/getBooksByFilter', (req,res,next) => {
     });
 })
 
+// Endpoint to check out a book 
+// params: id and email/username
+// must subtract 1 from Book field Stock where Id = id
+// must add row to BookHistory table and fill Id with id and User with email, fill in other fields
+app.post('/checkoutBook', (req, res, next) => {
+    var post_data = req.body; // get POST parameters
+    var id = post_data.id;
+    var email = post_data.email;
+
+    connection.query('SELECT * FROM Book where id = ?', [id], function(err,result,fields) {
+            // Check connection
+            connection.on('error', function(err) {
+                console.log('[MySQL ERROR]', err);
+            });
+
+        if (result <= 0) res.json('Out of Stock!');
+        else
+        {
+            connection.query("UPDATE Book SET stock = stock - 1 WHERE id = ?", 
+            [id], 
+            function(err,result,fields) {
+                connection.on('error', function(err) {
+                    console.log('[MySQL ERROR]', err);
+                    res.json('Register error: ', err);
+                });
+                res.json('Checkout Successful!');
+            })
+        }
+    });
+})
+
 // Below is a test to see if we can 'get' hashed passwords
 
 // app.get("/", (req,res,next) => {
