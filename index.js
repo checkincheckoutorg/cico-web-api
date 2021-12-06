@@ -261,7 +261,7 @@ app.get('/getDroppedOffBooks', (req,res,next) => {
     
     var dropped_off_action = "Dropped Off";
 
-    connection.query('SELECT DISTINCT Book.*, Account.email, BookHistory.id FROM Book, Account, BookHistory ' 
+    connection.query('SELECT DISTINCT Book.*, Account.email, BookHistory.id AS history_id FROM Book, Account, BookHistory ' 
                     + 'where BookHistory.account_id = Account.id '
                     + 'and Book.id = BookHistory.book_id '
                     + 'and Book.id in (select book_id from BookHistory where book_action = "Dropped Off")',
