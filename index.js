@@ -183,6 +183,8 @@ app.post('/checkoutBook', (req, res, next) => {
     var id = post_data.id;
     var email = post_data.email;
 
+    var checkout_action = "Check Out";
+
     connection.query('SELECT * FROM Book where id = ?', [id], function(err,result,fields) {
             // Check connection
             connection.on('error', function(err) {
@@ -199,8 +201,22 @@ app.post('/checkoutBook', (req, res, next) => {
                     console.log('[MySQL ERROR]', err);
                     res.json('Register error: ', err);
                 });
+                //res.json('Checkout Successful!');
+            })
+
+            connection.query("INSERT INTO BookHistory (book_id, account_id, book_action, action_time) "
+                            + "VALUES (?, "
+                            + "(SELECT id FROM Account WHERE email = ?), "
+                            + "?, NOW())",
+            [id, email, checkout_action],
+            function(err,result,fields) {
+                connection.on('error', function(err) {
+                    console.log('[MySQL ERROR]', err);
+                    res.json('Register error: ', err);
+                });
                 res.json('Checkout Successful!');
             })
+            
         }
     });
 })
