@@ -242,8 +242,8 @@ app.post('/checkInBook', (req, res, next) => {
         });
     });
 
-    connection.query("UPDATE BookHistory SET book_action = ?, action_time = NOW() WHERE id = ?",
-    [checkin_action, history_id],
+    connection.query("UPDATE BookHistory SET book_action = ?, action_time = \"Check In\" WHERE id = ?",
+    [history_id],
     function(err,result,fields) {
         // Check connection
         connection.on('error', function(err) {
