@@ -191,7 +191,7 @@ app.post('/checkoutBook', (req, res, next) => {
                 console.log('[MySQL ERROR]', err);
             });
 
-        if (result <= 0) res.json('Out of Stock!');
+        if (result[0].stock <= 0) res.json('Out of Stock!');
         else
         {
             connection.query("UPDATE Book SET stock = stock - 1 WHERE id = ?", 
