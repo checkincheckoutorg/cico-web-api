@@ -254,6 +254,27 @@ app.post('/checkInBook', (req, res, next) => {
     })
 })
 
+// endpoint to drop off book
+app.post('/dropOffBook', (req,res,next) => {
+    var post_data = req.body;
+    var id = post_data.book_id;
+    var email = post_data.email;
+    var book_action = "Dropped Off"
+
+    connection.query("INSERT INTO BookHistory (book_id, account_id, book_action, action_time) "
+                            + "VALUES (?, "
+                            + "(SELECT id FROM Account WHERE email = ?), "
+                            + "?, NOW())",
+            [id, email, book_action],
+            function(err,result,fields) {
+                connection.on('error', function(err) {
+                    console.log('[MySQL ERROR]', err);
+                    res.json('Register error: ', err);
+                });
+                res.json('Dropoff Successful!');
+            })
+})
+
 // Endpoint to get dropped off books
 app.get('/getDroppedOffBooks', (req,res,next) => {
     
