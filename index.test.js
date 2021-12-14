@@ -66,14 +66,3 @@ describe("get books by filter", () => {
         })
     })
 
-describe("check out book", () => {
-    // Tests for /checkoutBook endpoint
-        test('Should check out book', async () => {
-            const response = await (await request(app).post('/checkoutBook')).send({
-                id: 1,
-                email: "email"
-            })
-            expect(response.statusCode).toBe(200)
-        })
-})
-    
