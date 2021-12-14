@@ -240,6 +240,7 @@ app.post('/checkInBook', (req, res, next) => {
             console.log('[MySQL ERROR]', err);
             res.json("Can't Check In!");
         });
+        
     });
 
     connection.query("UPDATE BookHistory SET book_action = \"Check In\", action_time = NOW() WHERE id = ?",
