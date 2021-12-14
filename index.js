@@ -341,3 +341,9 @@ app.listen(process.env.port || process.env.RDS_PORT || 3000, () => {
     console.log('Running on port 3000')
 })
 
+afterAll(done => {
+    connection.end;
+    done();
+});
+
+module.exports = app
